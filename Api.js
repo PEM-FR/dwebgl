@@ -3,6 +3,5 @@ define([
     ], function(declare){
 
     return declare("dojox.webgl.Api", {
-
     });
 });
