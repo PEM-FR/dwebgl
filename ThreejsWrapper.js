@@ -1,4 +1,4 @@
-require("dojox.webgl.ThreejsWrapper", null, function(){
+require("dwebgl.ThreejsWrapper", null, function(){
     return {
         // _renderer: THREE.WebGLRenderer || THREE.CanvasRenderer
         _renderer: null,
