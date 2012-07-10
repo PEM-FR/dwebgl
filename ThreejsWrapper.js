@@ -1,5 +1,5 @@
-require("dwebgl.ThreejsWrapper", null, function(){
-    return {
+define(function(){
+    var wrapper = {
         // _renderer: THREE.WebGLRenderer || THREE.CanvasRenderer
         _renderer: null,
 
@@ -18,13 +18,26 @@ require("dwebgl.ThreejsWrapper", null, function(){
         // screenInterfaces : Array
         screenInterfaces : null,
 
+        _scene : null,
+
+        _camera : null,
+
+        _cameraControls : null,
+
         constructor: function(params) {
+
+            this._containerNode = params.containerNode;
+            this.objectModels = [];
+            this.screenInterfaces = [];
+
             this._clock = new THREE.Clock();
 
             this._createRenderer();
             this.addStats();
             this.init();
             this.animate();
+
+            return this;
 //            this.loadCharacter();
         },
 
@@ -91,26 +104,27 @@ require("dwebgl.ThreejsWrapper", null, function(){
                 model.update(delta);
             }, this);
 
-            this.screenInterfaces.forEach(this.screenInterfaces, function(gui){
+            this.screenInterfaces.forEach(function(gui){
                 gui.update(delta);
             }, this);
-            if(this.character) {
-                //this.character.update();
-
+            if(this._character) {
+                //this._character.update();
                 // update camera controls
-                this.cameraControls.update();
-
-                // actually render the scene
-                this._renderer.render(this.scene, this.camera);
-
+                this._cameraControls.update();
             }
+            // actually render the scene
+            this._renderer.render(this._scene, this._camera);
         },
 
         init: function() {
             // create a scene
-            this.scene = new THREE.Scene();
+            this._scene = new THREE.Scene();
+            this._camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
+            this._camera.position.set(0, 0, 5);
+            this._cameraControls = new THREEx.DragPanControls(this._camera);
+            this._scene.add(this._camera);
             // transparently support window resize
-            THREEx.WindowResize.bind(this._renderer, this.camera);
+            THREEx.WindowResize.bind(this._renderer, this._camera);
         // allow 'p' to make screenshot
         //THREEx.Screenshot.bindKey(this._renderer);
         // allow 'f' to go fullscreen where this feature is supported
@@ -132,7 +146,7 @@ require("dwebgl.ThreejsWrapper", null, function(){
                 var object = new ObjectModel({
                     'engine': this
                 });
-                this.scene.add( object.root );
+                this._scene.add( object.root );
                 this.objectModels.push(object);
             }));
         },
@@ -144,24 +158,16 @@ require("dwebgl.ThreejsWrapper", null, function(){
                 });
                 this.screenInterfaces.push(screen);
             }));
+        },
+
+        addMesh: function(mesh) {
+       	    this._scene.add(mesh);
         }
-/*
-,
-        loadCharacter: function() {
-            require(['app/models/spaceShips/f302', 'dojo/_base/connect'], dojo.hitch(this, function(Character, connect){
-                var character = new Character({
-                    'engine': this,
-                    gameControls:true
-                });
-                connect.connect(character, "onComplete", dojo.hitch(this, function() {
-                    this.camera = character.camera;
-                    this.cameraControls = character.cameraControls;
-                    this.scene.add( character.root );
-                    this.objectModels.push(character);
-                    this.loadGameObjects();
-                    this.character = character;
-                }));
-            }));
-        }
-*/
-}});
+
+    };
+
+    return function (params){
+        return wrapper.constructor(params);
+    };
+
+});

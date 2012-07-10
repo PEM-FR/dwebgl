@@ -1,3 +1,6 @@
 [submodule "vendor/three.js"]
 	path = vendor/three.js
 	url = https://github.com/mrdoob/three.js.git
+[submodule "vendor/threex"]
+	path = vendor/threex
+	url = git://github.com/jeromeetienne/threex.git
