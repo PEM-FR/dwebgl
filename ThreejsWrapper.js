@@ -1,5 +1,5 @@
 define([
-    "/dwebgl/api/wrapperApi.js"
+    "./api/wrapperApi"
 ], function(wrapperApi){
 
     function wrapper(params){
