@@ -1,5 +1,5 @@
 {
-  "name": "webgl",
+  "name": "dwebgl",
   "author": "Pierre Emanuel Manteau, Martin Shwalbe",
   "description": "This is an dojo extension project to offer a dojo layer over renderers like threejs, CubicVR, etc",
   "repository": {

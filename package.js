@@ -1,6 +1,6 @@
 var miniExcludes = {
-		"webgl/README.md": 1,
-		"webgl/package": 1
+		"dwebgl/README.md": 1,
+		"dwebgl/package": 1
 	},
 	isTestRe = /\/test\//;
 
