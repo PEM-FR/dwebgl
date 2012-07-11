@@ -17,27 +17,60 @@
     <script type="text/javascript" src="../vendor/threex/THREEx.WindowResize.js" defer="defer"></script>
     <script type="text/javascript" src="../vendor/threex.dragpancontrols.js" defer="defer"></script>
 
-
     <script type="text/javascript">
-    require(["dojo", "dojo/Ready", "../ThreejsWrapper.js", "dojo/dom"], function(dojo, ready, wrapper, dom){
-        console.log("wrapper : ", wrapper);
+    require([
+        "dojo", "dojo/Ready", "dojo/dom", "../ThreejsWrapper.js", "../Controller.js"
+    ], function(dojo, ready, dom, wrapper, controller){
         ready(function(){
-            // - you will most likely replace this part by your own
-            var geometry	= new THREE.TorusGeometry( 1, 0.42 );
-            var material	= new THREE.MeshNormalMaterial();
-            var mesh	= new THREE.Mesh( geometry, material );
-            var container = dom.byId("container");
-            var ctrl = new wrapper({containerNode : container});
-            ctrl.addMesh(mesh);
-            ctrl.getScene();
+            var container = dom.byId("container"),
+                ctrl = new controller({
+                    wrapper : new wrapper,
+                    containerNode : container
+                })
+            ;
         });
 
     });
     </script>
+<style type="text/css">
+body {
+	overflow	: hidden;
+	padding		: 0;
+	margin		: 0;
 
+	color		: #222;
+	background-color: #BBB;
+	font-family	: arial;
+	font-size	: 100%;
+}
+#info .top {
+	position	: absolute;
+	top		: 0px;
+	width		: 100%;
+	padding		: 5px;
+	text-align	: center;
+}
+#info a {
+	color		: #66F;
+	text-decoration	: none;
+}
+#info a:hover {
+	text-decoration	: underline;
+}
+#info .bottom {
+	position	: absolute;
+	bottom		: 0px;
+	right		: 5px;
+	padding		: 5px;
+}
+</style>
 </head>
 <body class="claro">
     <!-- three.js container -->
     <div id="container"></div>
+	<div id="info">
+        <div class="top">boilerplate for dwebgl</div>
+        <div class="bottom" id="inlineDoc" > - <i>p</i> for screenshot</div>
+    </div>
 </body>
 </html>
