@@ -1,11 +1,10 @@
-define([
-], function(){
+define([], function(){
 
-   function wrapperApi(){
+   function WrapperApi(){
         return this;
    };
 
-   wrapperApi.prototype = {
+   WrapperApi.prototype = {
         getScene: function(){
             // summary :
             //      This function returns a new instance of scene
@@ -22,6 +21,16 @@ define([
             //      and return it
             // returns : object
             throw new Error('Unimplemented API: wrapperApi.getRenderer');
+       },
+
+       render: function(scene, camera){
+            // summary :
+            //      This function calls the renderer's render function
+            // scene : dwebgl/api/SceneApi
+            //      The scene used for rendering
+            // camera : Object
+            //      The camera to use for the rendering
+            throw new Error('Unimplemented API: wrapperApi.render');
        },
 
        getClock: function(){
@@ -47,19 +56,8 @@ define([
             //      The camera to which we should attach controls
             // returns : object
             throw new Error('Unimplemented API: wrapperApi.getCameraControls');
-       },
-
-       addToScene: function(scnObj, scene){
-            // summary :
-            //      This function returns a camera controller object
-            // scnObj : object
-            //      The object to add to the scene
-            // scene : object
-            //      The scene to which the mesh will be add
-            // returns : object
-            throw new Error('Unimplemented API: wrapperApi.addMeshToScene');
        }
    }
 
-   return wrapperApi;
+   return WrapperApi;
 });

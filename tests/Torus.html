@@ -12,7 +12,8 @@
         dojoConfig = {
             baseUrl : "../../",
             paths: {
-                "dwebgl": "dwebgl"
+                "dwebgl": "dwebgl",
+                "threejs" : "dwebgl/threejsWrappers"
             },
             async:true,
             cacheBust:new Date(),
@@ -20,22 +21,15 @@
         };
     </script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js"></script>
-<!--	<script type="text/javascript" src="../vendor/three.js/Three.js"></script>
-	<script type="text/javascript" src="../vendor/three.js/Detector.js"></script>
-	<script type="text/javascript" src="../vendor/threex/THREEx.screenshot.js" defer="defer"></script>
-    <script type="text/javascript" src="../vendor/threex/THREEx.FullScreen.js" defer="defer"></script>
-    <script type="text/javascript" src="../vendor/threex/THREEx.WindowResize.js" defer="defer"></script>
-    <script type="text/javascript" src="../vendor/threex.dragpancontrols.js" defer="defer"></script>
--->
 
     <script type="text/javascript" defer="defer">
     require([
-        "dojo", "dojo/ready", "dojo/dom", "dwebgl/ThreejsWrapper", "dwebgl/Controller"
-    ], function(dojo, ready, dom, wrapper, controller){
+        "dojo", "dojo/ready", "dojo/dom", "threejs/Threejs", "dwebgl/Controller"
+    ], function(dojo, ready, dom, ThreejsWrapper, controller){
         ready(function(){
             var container = dom.byId("container"),
                 ctrl = new controller({
-                    wrapper : new wrapper,
+                    wrapper : new ThreejsWrapper,
                     containerNode : container
                 })
             ;
@@ -43,38 +37,6 @@
 
     });
     </script>
-<style type="text/css">
-body {
-	overflow	: hidden;
-	padding		: 0;
-	margin		: 0;
-
-	color		: #222;
-	background-color: #BBB;
-	font-family	: arial;
-	font-size	: 100%;
-}
-#info .top {
-	position	: absolute;
-	top		: 0px;
-	width		: 100%;
-	padding		: 5px;
-	text-align	: center;
-}
-#info a {
-	color		: #66F;
-	text-decoration	: none;
-}
-#info a:hover {
-	text-decoration	: underline;
-}
-#info .bottom {
-	position	: absolute;
-	bottom		: 0px;
-	right		: 5px;
-	padding		: 5px;
-}
-</style>
 </head>
 <body class="claro">
     <!-- three.js container -->

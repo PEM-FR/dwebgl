@@ -96,7 +96,7 @@ define([
             // update camera controls
             this._cameraControls.update();
             // actually render the scene
-            this._renderer.render(this._scene, this._camera);
+            this.wrapper.render(this._scene, this._camera);
         }
 
     });

@@ -8,44 +8,45 @@ require([
 ]);
 
 define([
-    "dwebgl/api/wrapperApi"
-], function(wrapperApi){
+    "dwebgl/api/WrapperApi",
+    "threejs/Scene"
+], function(WrapperApi, SceneWrapper){
 
 
-    function wrapper(params){
-        wrapperApi.call(this);
+    function ThreejsWrapper(params){
+        WrapperApi.call(this);
         return this;
     };
 
-    wrapper.prototype = Object.create(wrapperApi.prototype);
+    ThreejsWrapper.prototype = Object.create(WrapperApi.prototype);
 
-    wrapper.prototype._renderer = null;
+    ThreejsWrapper.prototype._renderer = null;
 
-    wrapper.prototype.getScene = function() {
-        return new THREE.Scene();
+    ThreejsWrapper.prototype.getScene = function() {
+        return new SceneWrapper;
     };
 
-    wrapper.prototype.getClock = function() {
+    ThreejsWrapper.prototype.getClock = function() {
         return new THREE.Clock();
     };
 
-    wrapper.prototype.getCamera = function(coords) {
+    ThreejsWrapper.prototype.getCamera = function(coords) {
         var camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
         camera.position.set(coords.x, coords.y, coords.z);
         return camera;
     };
 
-    wrapper.prototype.getCameraControls = function(camera) {
+    ThreejsWrapper.prototype.getCameraControls = function(camera) {
         return new THREEx.DragPanControls(camera);
     };
 
-    wrapper.prototype.getRenderer = function(containerNode) {
+    ThreejsWrapper.prototype.getRenderer = function(containerNode) {
         if(!containerNode){
             if(this._renderer){
                 return this._renderer;
             }
             throw new Error(
-                "wrapper.getRenderer : "
+                "ThreejsWrapper.getRenderer : "
                     + "No containerNode specified, and no renderer Instance set"
             );
             return;
@@ -68,7 +69,11 @@ define([
         return this._renderer;
     };
 
-    wrapper.prototype.addStats = function() {
+    ThreejsWrapper.prototype.render = function(scene, camera) {
+        this._renderer.render(scene.getInstance(), camera);
+    };
+
+    ThreejsWrapper.prototype.addStats = function() {
             // add Stats.js - https://github.com/mrdoob/stats.js
 //            this.stats = new Stats();
 //            this.stats.domElement.style.position	= 'absolute';
@@ -76,10 +81,10 @@ define([
 //            document.body.appendChild( this.stats.domElement );
     };
 
-    wrapper.prototype.addToScene = function(scnObj, scene) {
+    ThreejsWrapper.prototype.addToScene = function(scnObj, scene) {
    	    scene.add(scnObj);
     };
 
-    return wrapper;
+    return ThreejsWrapper;
 
 });
